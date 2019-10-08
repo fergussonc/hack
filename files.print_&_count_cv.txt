@@ -1,0 +1,79 @@
+import java.io.*;
+import java.util.*;
+
+class q2
+{
+	public static void main(String ss[])throws IOException
+	{
+		try{
+		//Scanner sc=new Scanner(System.in);
+		if(ss.length==2)
+		{
+			String str=ss[0];
+			String name=ss[1];
+			FileReader f2=new FileReader(name);
+			BufferedReader br=new BufferedReader(f2);//Scanner sc=new Scanner(f2);
+			String line;
+			int l;
+			
+			while((line=br.readLine())!=null)
+			{
+				//line=sc.nextLine();
+				if((line.indexOf(str))!=-1)
+				{
+					System.out.println(line);
+				}
+			}
+		}
+		if(ss.length==3)
+		{
+			String str=ss[1];
+			String line;
+			int l;
+			int count=0;
+			FileReader f2=new FileReader(ss[2]);
+			BufferedReader br=new BufferedReader(f2);//Scanner sc=new Scanner(f2);
+						
+			if(ss[0].equals("c"))
+			{
+				while((line=br.readLine())!=null)
+				{
+					//line=sc.nextLine();
+					if((line.indexOf(str))!=-1)
+					{	
+						count++;
+						/*count=count+1;
+						if(count==2)						
+						System.out.println("Count of lines containing the string is "+count);	*/
+					}
+				}
+				System.out.println("Count of lines containing the string is "+count);
+			}
+			
+			
+			if(ss[0].equals("v"))
+			{
+				System.out.println("The lines not containing the string are:");
+				while((line=br.readLine())!=null)
+				{
+					//line=sc.nextLine();
+					if((line.indexOf(str))==-1)
+					{
+						System.out.println(line);
+					}
+				}
+			}
+		}
+		else if(ss.length > 3 || ss.length < 2)
+		{
+			System.out.println("Invalid number of arguments!!");
+		}
+		}
+		catch(Exception ee)
+		{
+			
+		}
+	}
+}
+
+		 

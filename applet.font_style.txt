@@ -1,0 +1,71 @@
+import java.awt.*;
+import java.applet.*;
+import javax.swing.*;
+import java.awt.event.*;
+import java.io.*;
+import java.awt.font.*;
+import java.util.*;
+/*<applet code="style.class" width="300" height="300"></applet>*/
+
+public class style extends Applet implements ActionListener
+{
+	JTextField t;
+	JButton b;
+	JComboBox cb1,cb2,cb3;
+	Font f;
+	String s,c;
+	int z;
+	public void init()
+	{
+		b=new JButton("Submit");
+		t=new JTextField(20);
+		setLayout(new FlowLayout());
+		String fonts[]={"Sans","VL Gothic","URW Palladio L","UNDotum"};
+		String fsize[]={"2","4","6","8","10","12","14","16","18","20"};
+		String fstyle[]={"BOLD","ITALIC","UNDERLINE"};
+		cb1=new JComboBox(fonts);
+		cb2=new JComboBox(fstyle);
+		cb3=new JComboBox(fsize);
+		add(t);	
+		add(cb1);	
+		add(cb2);	
+		add(cb3);	
+		add(b);	
+		setVisible(true);
+		cb1.addActionListener(this);	
+		cb2.addActionListener(this);
+		cb3.addActionListener(this);
+		b.addActionListener(this);
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==b)
+		{
+			s=(String)cb2.getSelectedItem();
+			c=(String)cb1.getSelectedItem();
+			z=Integer.parseInt((String)cb3.getSelectedItem());
+			if(s.equals("BOLD"))
+			{
+				f=new Font(c,Font.BOLD,z);
+				t.setFont(f);
+			}
+			if(s.equals("ITALIC"))
+			{
+				f=new Font(c,Font.ITALIC,z);
+				t.setFont(f);
+			}
+			if(s.equals("UNDERLINE"))
+			{
+				f=t.getFont();
+				Map att=f.getAttributes();
+				att.put(TextAttribute.UNDERLINE,TextAttribute.UNDERLINE_ON);
+				t.setFont(f.deriveFont(att));
+			}
+		}
+	}
+	public static void main(String args[])
+	{
+		new style();
+	}
+}
+			

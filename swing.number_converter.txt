@@ -1,0 +1,111 @@
+import java.awt.*;
+import java.swing.*;
+import java.awt.event.*;
+
+public class Num extends JFrame implements ActionListener
+{
+	JRadioButton rb1,rb2,rb3;
+	JTextField t;
+	JButton b;
+	int n;
+	String input;
+	Num()
+	{
+		b=new JButton("INPUT");
+		b.setBounds(30,40,150,30);
+		t=new JTextField(200,40,150,30);
+		t.setBounds();
+		
+		rb1=new JRadioButton ("DECIMAL");
+		rb1.setBounds(100,100,100,30);
+		rb1=new JRadioButton ("HEXADECIMAL");
+		rb1.setBounds(100,100,100,30);	
+		rb1=new JRadioButton ("OCTAL");
+		rb1.setBounds(100,100,100,30);
+
+		ButtonGroup bg=new ButtonGroup();
+		
+		bg.add(rb1);
+		bg.add(rb2);
+		bg.add(rb3);
+
+		b.addActionListener(this);
+
+		add(b);
+		add(t);
+		add(rb1);
+		add(rb2);
+		add(rb3);
+		setSize(500,300);
+		setLayout(null);
+
+setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setVisible(true);
+	}
+	
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==b)
+		input=JOptionPane.showInputDialog(this,"ENETR THE BINARY NUMBER ");
+		n=Integer.parseInt(input);
+		if(rb1.isSelected())
+		{
+			int decimalNumber=0,i=0;
+			int rem,num=n;
+			while(num!=0)
+			{
+				rem=num%10;
+				num=num/10;
+				decimalNumber+=rem*Math.pow(2,i);
+				++i;
+			}
+			t.setText(Integer.toString(decimalNumber));
+		}
+		if(rb2.isSelected())
+		{
+			int rem,num=n,i=0,decimalNumber=0;
+			String hexdecnum="";
+			char hex[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};
+			while(num!=0)
+			{
+				decimalNumber+=(num%10)*Math.pow(2,i);
+				++i;
+				num/=10;
+			}
+			while(decimalNumber!=10)
+			{
+				rem=decimalNumber%16;
+				hexdecnum=hex[rem]+hexdecnum;
+				decimalNumber=decimalNumber/16;
+			}
+			t.setText(hexdecnum);
+		}
+		if(rb3.isSelected())
+		{
+			int octalNumber=0,decimalNumber=0,num=n,i=0;
+			while(num!=0)
+			{
+				decimalNumber +=(num%10)*Math.pow(2,i);
+				++i;
+				num/=10;
+			}
+			i=1;
+			while(decimalNumber!=0)
+			{
+				octalNumber+=(decimalNumber%8)*i;
+				decimalNumber/=8;
+				i*=10;
+			}
+			t.setText(Integer.toString(octalNumber));
+		}
+	}
+		
+	public static void main(String args[])
+	{
+		new Num();
+	}
+}
+
+
+
+

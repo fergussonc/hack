@@ -1,0 +1,314 @@
+import java.io.*;
+	
+class person
+{
+	String name;
+	String address;
+	
+	person(String nm,String ad)
+	{
+		name=nm;
+		address=ad;
+	}
+}
+
+class student extends person
+{
+	String course[]=new String[10];
+	String grade[]=new String[10];
+	int n;
+	
+	student(String nm,String ad)
+	{
+		super(nm,ad);
+	}
+	
+	void add_course() throws IOException
+	{
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter the number of cources :");
+		int q=Integer.parseInt(br.readLine());
+		n=q;
+		
+		for(int i=0;i<n;i++)
+		{
+			int flag=0;
+			System.out.println("Enter the course name :");
+			course[i]=br.readLine();
+		
+			if(i>0)
+			{
+				int j=0;
+				while(j<i)
+				{
+					if(course[i].equals(course[j]))
+					{
+						System.out.println("Course Already Exists!!");
+						i--;
+						flag=1;
+						break;
+					}
+					else
+						j++;			
+				}
+			}
+			
+			if(flag==0)
+			{
+				System.out.println("Enter the Grade :");
+				grade[i]=br.readLine();
+			}
+		}
+	}
+	
+	void display()throws IOException
+	{
+		System.out.println("Name: "+name);
+		System.out.println("Address: "+address);
+		System.out.println("Courses are :");
+		for(int i=0;i<n;i++)
+		{
+			System.out.println(course[i]+"\t"+grade[i]);
+		}
+	}
+}
+
+class teacher extends person
+{
+	String c_taught[]=new String[10];
+	int no;
+		
+	teacher(String nm,String ad)
+	{
+		super(nm,ad);
+	}
+	
+	void addc_taught(teacher obj2[],int p) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter the number of courses: ");
+		int q=Integer.parseInt(br.readLine());
+		no=q;
+		for(int i=0;i<no;i++)
+		{
+			System.out.println("Enter the courses: ");
+			c_taught[i]=br.readLine();
+			if(i>0)
+			{
+				int j=0;
+				while(j<i)
+				{
+					if(c_taught[i].equals(c_taught[j]))
+					{
+						System.out.println("Course Already Exists!!");
+						i--;
+						break;
+					}
+					else
+						j++;
+				}
+			}
+		}
+	}
+		
+	void delete_c(teacher obj2[],int p) throws IOException
+	{
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		int flag=0,flag1=0;
+	
+		for(int j=0;j<p;j++)
+		{
+			System.out.println("Enter the teacher name :");
+			String s=br.readLine();
+			String r=obj2[j].name;
+	
+			if(r.equals(s))
+			{
+				flag=1;	
+				System.out.println("Enter the course name to be deleted :");
+				String l=br.readLine();
+				
+				for(int i=0;i<obj2[j].no;i++)
+				{
+					if(l.equals(obj2[j].c_taught[i]))
+					{
+						System.out.println("course deleted :"+obj2[j].c_taught[i]);
+						obj2[j].c_taught[i]=" ";
+						flag1=1;
+					}
+				}
+			}
+		}
+		if(flag1==0)
+		{
+			System.out.println("Course does not Exists!!");
+		}
+		if(flag==0)
+		{
+			System.out.println("Teacher does not Exists!!");
+		}
+	}
+	
+	void add_c(teacher obj2[],int p) throws IOException
+	{
+		int l;
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("Enter the teacher name :");
+		String s=br.readLine();
+		int flag=0;
+		
+		for(int k=0;k<p;k++)
+		{
+			String r=obj2[k].name;
+			if(r.equals(s))
+			{
+				flag=1;
+				System.out.println("Enter the number of course to add :");
+				l=Integer.parseInt(br.readLine());
+				int a=obj2[k].no;
+				obj2[k].no=obj2[k].no+1;
+			
+				for(int i=a;i<l/*obj2[k].no*/;i++)
+				{
+					System.out.println("Enter the course name :");
+					obj2[k].c_taught[i]=br.readLine();
+					if(i>0)
+					{
+						int j=0;
+						while(j<i)
+						{
+							if(obj2[k].c_taught[i].equals(obj2[k].c_taught[j]))
+							{
+								System.out.println("Course Already Exists !!");
+								i--;
+								break;
+							}
+							else
+								j++;
+						}
+					}
+				}
+			}
+		}
+			
+		if(flag==0)
+		{
+			System.out.println("Teacher does not Exists!!");
+		}
+	}
+	
+	void display()throws IOException
+	{
+		System.out.println("Name: "+name);
+		System.out.println("Address: "+address);
+		System.out.println("Course :");
+		for(int i=0;i<no;i++)
+		{
+			if(c_taught[i]==" ")
+			{
+				//i++;
+			}
+			else
+			{
+				System.out.println(c_taught[i]);
+				//i++;
+			}
+		}
+	}
+}
+	
+class clg
+{
+	public static void main(String ss[])throws IOException
+	{
+		int p,q,i,ch,r;
+		String names=" ",address=" ";
+		student []obj=new student[10];	
+		teacher []obj1=new teacher[10];
+		teacher t=new teacher(names,address);
+		
+		BufferedReader br =new BufferedReader(new InputStreamReader(System.in));
+		
+		while(true)
+		{
+			System.out.println("1.Student");
+			System.out.println("2.Teacher");
+			System.out.println("3.Exit");
+			System.out.println("Enter your choice :");
+			ch=Integer.parseInt(br.readLine());					
+			
+			switch(ch)
+			{
+				case 1:
+					System.out.println("Enter the number of students :");
+					p=Integer.parseInt(br.readLine());
+					for(i=0;i<p;i++)
+					{
+						System.out.println("Enter the name :");
+						names=br.readLine();
+						System.out.println("Enter the address :");
+						address=br.readLine();
+						obj[i]=new student(names,address);
+						obj[i].add_course();
+					}
+					
+					System.out.println("Student details are :");
+					
+					for(i=0;i<p;i++)
+					{
+						obj[i].display();		
+					}
+					break;
+
+				case 2:
+					System.out.println("Enter the number of teachers :");
+					p=Integer.parseInt(br.readLine());
+					for(i=0;i<p;i++)
+					{
+						System.out.println("Enter the name :");
+						names=br.readLine();
+						System.out.println("Enter the address :");
+						address=br.readLine();
+						obj1[i]=new teacher(names,address);
+					}
+					System.out.println("Teacher details are :");
+					for(i=0;i<p;i++)
+					{
+						obj1[i].display();		
+					}
+					
+					while(true)
+					{
+						System.out.println("1.Add course");
+						System.out.println("2.Delete course");
+						System.out.println("3.Display");
+						System.out.println("4.Exit");
+						System.out.println("Enter your choice :");
+						r=Integer.parseInt(br.readLine());
+						switch(r)
+						{
+							case 1:
+								t.add_c(obj1,p);
+								break;
+							case 2:
+								t.delete_c(obj1,p);
+								break;
+							case 3:
+								System.out.println("Teacher details are :");
+								for(i=0;i<p;i++)
+								{
+									obj1[i].display();		
+								}
+								break;
+							case 4:
+								System.exit(0);
+								break;
+						}
+					}
+				case 3:
+					System.exit(0);
+				break;
+			}
+		}
+	}
+}

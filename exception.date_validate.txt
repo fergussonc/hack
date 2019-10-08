@@ -1,0 +1,149 @@
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+class MyException extends Exception
+{
+	MyException(String s)
+	{
+		super(s);
+	}
+}
+
+class Mydate
+{
+	int dd,mm,yyyy;
+	
+	void accept(int d,int m,int y)
+	{
+		dd=d;
+		mm=m;
+		yyyy=y;
+	}
+	
+	void display()
+	{
+		System.out.println("Date is Valid:" + dd + "-" + mm + "-" + yyyy);
+	}
+}
+
+class date
+{
+	public static void main(String ss[])
+	{
+		Scanner sc=new Scanner(System.in);		
+		
+		int m=0;
+		Mydate dt=new Mydate();
+		
+		System.out.println("Enter the Date:");
+		int d=sc.nextInt();
+		
+		System.out.println("Enter the Month:");
+		try
+		{
+			m=sc.nextInt();
+			if(m<=0 ||m>12)
+			{
+				throw new MyException("Invalid Month!!");
+			}
+		}
+		catch(MyException e)
+		{
+			System.out.println("Exception :");
+			System.out.println(e.getMessage());
+			System.exit(1);
+		}
+	
+		System.out.println("Enter the Year");
+		int y=sc.nextInt();
+		
+		switch(m)
+		{		
+			case 1:
+			case 3:
+			case 5:
+			case 7:
+			case 8:
+			case 10:
+			case 12:
+				//MONTHS HAVING 31 DAYS
+				try
+				{
+					if(d>31 || d<1)
+					{
+						throw new MyException("Invalid -- Date!!");
+					}	
+					else
+					{
+						dt.accept(d,m,y);
+						dt.display();
+					}
+				}
+				catch(MyException e)
+				{
+					System.out.println("Exception :");
+					System.out.println(e.getMessage());
+				}					
+				break;
+			case 4:
+			case 6:
+			case 9:
+			case 11:
+				//MONTH HAVING 30 DAYS
+				try
+				{
+					if(d>30 || d<1)
+					{
+						throw new MyException("Invalid -- Date!!");
+					}	
+					else
+					{
+						dt.accept(d,m,y);
+						dt.display();
+					}
+				}
+				catch(MyException e)
+				{
+					System.out.println("Exception :");
+					System.out.println(e.getMessage());
+				}					
+				break;
+			case 2:
+				//FOR FEBRUARY(LEAP AND NONLEAP YEAR)
+				try
+				{
+					if(y%4==0)
+					{
+						if(d>29 || d<1)
+						{
+							throw new MyException("Invalid -- Date -- Leap Year!!");
+						}	
+						else
+						{
+							dt.accept(d,m,y);
+							dt.display();
+						}
+					}
+					else if(y%4!=0)
+					{
+						if(d>28 || d<1)
+						{
+							throw new MyException("Invalid -- Date -- Nonleap Year!!");
+						}	
+						else
+						{
+							dt.accept(d,m,y);
+							dt.display();
+						}
+					}				
+				}
+				catch(MyException e)
+				{
+					System.out.println("Exception :");
+					System.out.println(e.getMessage());
+				}					
+				break;
+		}
+	}
+}

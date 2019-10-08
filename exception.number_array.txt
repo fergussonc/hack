@@ -1,0 +1,62 @@
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+class array
+{
+	public static void main(String ss[])
+	{
+		int A[]=new int[10];
+		int n,i,s=0;
+		Scanner sc=new Scanner(System.in);
+
+		System.out.println("Enter the size of the array:");
+		n=sc.nextInt();
+		try
+		{
+			if(n<=0)
+			{
+				throw new ArithmeticException("Invalid array size!!");
+			}
+			else
+			{
+				System.out.println("Enter the Elements of the array:");
+				for(i=0;i<n;i++)
+				{
+					A[i]=sc.nextInt();
+					s=s+A[i];
+				}
+				s=s/n;
+				System.out.println("Average of the array: " + s);
+				System.out.println("Elements of the array:");
+				for(i=0;i<n;i++)
+				{
+					if(i>n)
+					{
+						throw new ArrayIndexOutOfBoundsException("Invalid index!!");
+					}
+					else
+					{
+						System.out.println("\t"+A[i]);
+					}
+				}
+			}
+		}
+		catch(ArithmeticException e)
+		{
+			System.out.println(e);
+		}
+		catch(ArrayIndexOutOfBoundsException ae)
+		{
+			System.out.println(ae);
+		}
+		catch(NumberFormatException abe)
+		{
+			System.out.println(abe);
+		}
+	}
+}
+				
+							
+				
+						

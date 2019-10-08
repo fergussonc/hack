@@ -1,0 +1,101 @@
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+class MyException extends Exception
+{
+	MyException(String s)
+	{
+		super(s);
+	}
+}
+
+class Email
+{
+	String s;
+	
+	Email()
+	{
+		s=" ";
+	}
+		
+	void accept(String eml)
+	{
+		s=eml;
+	}
+
+	void display()
+	{
+		System.out.println("Email is Valid -- "+ s);
+	}
+}
+
+class email
+{
+	public static void main(String ss[])
+	{
+		int i,flag=0,flag1=0,flag2=0;		
+		Scanner sc=new Scanner(System.in);
+		Email em=new Email();
+		System.out.println("Enter the Email:");
+		String data=sc.nextLine();
+		
+		String s1=data.substring(data.length()-4);
+		String s2=".com";
+		
+		try
+		{
+			if(s1.equals(s2))
+			{
+				int oth=data.charAt(0);
+				if(oth>=65 && oth<=122)
+				{
+					for(i=1;data.charAt(i)!='@';i++)
+					{
+						oth=data.charAt(i);
+						if((!(oth>=97 && oth<=122)) && (!(oth>=48 && oth<=57)))
+						{
+							flag=1;
+							throw new MyException("Invalid Email!!");
+						}
+					}
+					if(data.charAt(i)!='@')
+					{
+						flag2=1;
+						throw new MyException("Invalid Email -- @  not found!!");
+					}
+				
+					for(int j=i+1;data.charAt(j)!='.';j++)
+					{
+						oth=data.charAt(j);
+						if(!(oth>=97 && oth<=122))
+						{
+							flag1=1;
+							throw new MyException("Invalid Email Address!!");
+						}
+					}
+					if(flag!=1 && flag!=1 && flag2!=1)
+					{
+						em.accept(data);
+						em.display();
+					}
+				}
+				else
+				{
+					throw new MyException("Invalid Email -- 1st character cannot be numeric!!");
+				}
+			}
+			else
+			{
+				throw new MyException("Invalid Email -- .com!!");
+			}
+		}
+		catch(MyException e)
+		{
+			System.out.println("Exception :");
+			System.out.println(e.getMessage());
+		}
+	}
+}
+				
+					

@@ -1,0 +1,81 @@
+import java.awt.*;
+import java.applet.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+/*<applet code="login.class" width="300" height="300"></applet>*/	
+
+public class login extends Applet implements ActionListener
+{
+	JLabel n,p;
+	JTextField name;
+	JPasswordField pass;
+	JButton b1,b2;
+	int c=0;
+	
+	public void init()
+	{
+		n=new JLabel("Username");	
+		p=new JLabel("Password");
+			
+		name=new JTextField(15);
+		pass=new JPasswordField(15);
+			
+		b1=new JButton("Submit");
+		b2=new JButton("Clear");
+		setLayout(new FlowLayout(FlowLayout.LEFT));
+
+		add(n);
+		add(name);
+		add(p);
+		add(pass);
+		add(b1);
+		add(b2);
+		setVisible(true);
+		
+		b1.addActionListener(this);
+		b2.addActionListener(this);
+	}
+	
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==b1)
+		{
+			if(c<3)
+			{
+				String str1=name.getText();
+				char []str2=pass.getPassword();
+				if(str1.equals("") || str2.equals(""))
+				{
+					JOptionPane.showMessageDialog(null,"Username and Password cannot be empty!!","DISPLAY",JOptionPane.PLAIN_MESSAGE);
+					c++;
+				}
+				else if(str2.length<8)
+				{
+					JOptionPane.showMessageDialog(null,"Password Length should be more than 8 characters!!","DISPLAY",JOptionPane.PLAIN_MESSAGE);
+					c++;
+				}
+				else		
+				{
+					JOptionPane.showMessageDialog(null,"valid","DISPLAY",JOptionPane.PLAIN_MESSAGE);
+					c++;
+				}
+			}
+			else		
+			{
+				JOptionPane.showMessageDialog(null,"3 Invalid Attempts!!","DISPLAY",JOptionPane.PLAIN_MESSAGE);
+			}		
+		}
+
+		if(ae.getSource()==b2)
+		{
+			name.setText("");
+			pass.setText("");
+		}
+	}
+	
+	public static void main(String ss[])
+	{
+		new login();
+	}	
+}

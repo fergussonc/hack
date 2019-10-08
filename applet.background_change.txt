@@ -1,0 +1,42 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.applet.*;
+
+/*<applet code="Appletq3.class" width="300" height="500"></applet>*/
+
+public class Appletq3 extends Applet implements ActionListener
+{
+	JTextField ta;
+	JButton back,fore;
+	public void init()
+	{
+		ta=new JTextField(20);
+		ta.setText("Welcome");
+		back=new JButton("Background");
+		fore=new JButton("Foreground");
+		setLayout(new FlowLayout());
+		add(ta);
+		add(back);
+		add(fore);
+		back.addActionListener(this);
+		fore.addActionListener(this);
+	}
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==back)
+		{
+			Color col=JColorChooser.showDialog(this,"Choose Background Color",Color.CYAN);
+			setBackground(col);
+		}
+		if(ae.getSource()==fore)
+                {
+                        Color col=JColorChooser.showDialog(this,"Choose Foreground Color",Color.CYAN);
+                        ta.setForeground(col);
+                }
+ 	}
+	public static void main(String[] args)
+	{
+		new Appletq3();
+	}
+}

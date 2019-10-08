@@ -1,0 +1,280 @@
+import java.io.*;
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+class queens extends JFrame implements ActionListener
+{
+	JButton b[]=new JButton[17];
+	int a[][]=new int[4][4];
+	int cnt=0,r,c;
+	queens()
+	{
+		for(int i=1;i<17;i++)
+		{
+			b[i]=new JButton();
+
+		}
+		setLayout(new GridLayout(4,4));
+		for(int i=1;i<17;i++)
+		{
+			add(b[i]);
+			b[i].addActionListener(this);
+		}
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(400,500);
+		setVisible(true);
+	}
+	void init()
+	{
+		for(int i=0;i<4;i++)
+		{
+			for(int j=0;j<4;j++)
+			{
+				a[i][j]=0;
+			}
+		}
+
+	}
+	boolean checkrow(int a[][],int r)
+	{
+		for(int i=0;i<4;i++)
+		{
+			if(a[r][i]==1)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	boolean checkcolumn(int a[][],int c)
+	{
+		for(int i=0;i<4;i++)
+		{
+			if(a[i][c]==1)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	boolean checkdiagonal(int a[][],int sub,int sum)
+	{
+		/*System.out.println(r+"\n"+c);
+for(int i=0;i<4;i++)
+		{
+			for(int j=0;j<4;j++)
+			{
+				System.out.println(a[i][j]+"\t");
+			}
+		}
+		int sub=r-c;
+		int sum=r+c;
+		System.out.println(sub+"\t"+sum);*/
+		for(int i=0;i<4;i++)
+		{
+			for(int j=0;j<4;j++)
+			{
+				if((i-j)==sub)
+				{
+
+
+					if(a[i][j]==1)
+					{
+					//System.out.println("insub");
+						return false;
+					}
+				}
+				if((i+j)==sum)
+				{
+
+					if(a[i][j]==1)
+					{
+										//	System.out.println(i+"\t"+j);
+					//System.out.println(i+j);
+					//System.out.println("insum");
+					return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
+	public void actionPerformed(ActionEvent ae)
+	{
+		if(ae.getSource()==b[1])
+		{
+			r=0;
+			c=0;
+		}
+		else if(ae.getSource()==b[2])
+		{
+			r=0;c=1;
+		}
+		else if(ae.getSource()==b[3])
+		{
+			r=0;c=2;
+		}
+		else if(ae.getSource()==b[4])
+		{
+			r=0;c=3;
+		}
+		else if(ae.getSource()==b[5])
+		{
+			r=1;c=0;
+		}
+		else if(ae.getSource()==b[6])
+		{
+			r=1;c=1;
+		}
+		else if(ae.getSource()==b[7])
+		{
+			r=1;c=2;
+		}
+		else if(ae.getSource()==b[8])
+		{
+			r=1;c=3;
+		}
+		else if(ae.getSource()==b[9])
+		{
+			r=2;c=0;
+		}
+		else if(ae.getSource()==b[10])
+		{
+			r=2;c=1;
+		}
+		else if(ae.getSource()==b[11])
+		{
+			r=2;c=2;
+		}
+		else if(ae.getSource()==b[12])
+		{
+			r=2;c=3;
+		}
+		else if(ae.getSource()==b[13])
+		{
+			r=3;c=0;
+		}
+		else if(ae.getSource()==b[14])
+		{
+			r=3;c=1;
+		}
+		else if(ae.getSource()==b[15])
+		{
+			r=3;c=2;
+		}
+		else if(ae.getSource()==b[16])
+		{
+			r=3;c=3;
+		}
+		cnt++;int sum=0,sub=0;
+		sum=r+c;
+		sub=r-c;
+		for(int i=1;i<17;i++)
+		{
+			if(ae.getSource()==b[i])
+			{
+				int f1=0;
+				if(cnt==1)
+				{
+					a[r][c]=1;
+					b[i].setText("Q");
+				}
+				else if(cnt==2||cnt==3)
+				{
+					if(!checkrow(a,r))
+					{
+						f1=1;
+						cnt--;
+						JOptionPane.showMessageDialog(null,"Queen already avilable in current row");
+					}
+					else if(!checkcolumn(a,c))
+					{
+						cnt--;
+						f1=1;
+						JOptionPane.showMessageDialog(null,"Queen already avilable in current column");
+					}
+					else if(!checkdiagonal(a,sub,sum))
+					{
+						cnt--;
+						f1=1;
+						JOptionPane.showMessageDialog(null,"Queen already avilable diagonally");
+					}
+					else if(f1==0)
+					{
+						a[r][c]=1;
+						b[i].setText("Q");
+					}
+				}
+				else if(cnt==4)
+				{
+					int flag=0,f=0;
+					for(int j=0;j<4;j++)
+					{
+						int sb=r-j;
+						int sm=r+j;
+						if(checkrow(a,r)&&checkcolumn(a,j)&&checkdiagonal(a,sb,sm))
+						{
+							flag=1;
+						}
+					}
+						if(flag==1)
+						{
+							if(!checkrow(a,r))
+							{
+								f=1;
+								cnt--;
+								JOptionPane.showMessageDialog(null,"Queen already avilable in current row");	
+							}
+							else if(!checkcolumn(a,c))
+							{
+								cnt--;
+								f=1;
+								JOptionPane.showMessageDialog(null,"Queen already avilable in current column");
+							}
+							else if(!checkdiagonal(a,sub,sum))
+							{
+								cnt--;
+								f=1;
+								JOptionPane.showMessageDialog(null,"Queen already avilable diagonally");
+							}
+						}
+						else if(flag!=1)
+						{
+							JOptionPane.showMessageDialog(null,"You lose!!");
+							cnt=0;
+							for(int k=1;k<17;k++)
+							{
+								b[k].setText("");
+							}
+							init();	
+						}
+						if(f==0&&flag==1)
+						{
+							a[r][c]=1;
+							b[i].setText("Q");
+							System.out.println("Required solution matrix is:");
+							for(int l=0;l<4;l++)
+							{
+								for(int m=0;m<4;m++)
+								{
+									System.out.print(a[l][m]+"\t");		
+								}
+								System.out.print("\n");
+							}
+							JOptionPane.showMessageDialog(null,"Congratulations:You won!!");
+							
+						}
+										
+
+				}
+			}
+		}
+	}
+	public static void main(String []args)
+	{
+		queens q=new queens();
+		q.init();
+	}
+}
